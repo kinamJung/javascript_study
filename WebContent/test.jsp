@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>배트맨 슈퍼맨을 피하라</title>
 
 <style type="text/css">
 #elem {
@@ -25,6 +25,54 @@
 
 <script type="text/javascript">
 
+
+
+
+window.onload=function(){
+
+	initCircle()
+	
+	
+	makeBatman()
+	
+	document.getElementById("mouse").style.cursor = "none";
+	document.addEventListener("mousemove", function () {
+		var image = document.getElementById("mouse")
+		var width = image.clientWidth
+		var height = image.clientHeight
+		showBatman(width,height)
+	} , false)
+	
+	
+	//setInterval(changeTheMove, 100)
+	//setInterval(changeTheSuperMan, 30);
+	/* setInterval(makeSuperman,1000)
+	setInterval(move, 30); */
+} 
+
+//init circle
+function initCircle(){
+	
+	var div = document.getElementById("svg")
+		
+	div.setAttribute("width", "400px")
+	div.setAttribute("height", "200px")
+		
+		 
+	var height = parseInt( comstyle("elem","height"))
+	var width = parseInt(comstyle("elem","width"))
+		
+	var x = width / 2
+	var y = height / 2
+	var circleRedius = Math.min(width, height) / 2
+	var circ = document.getElementById("circ")
+		
+	circ.setAttribute("r", circleRedius)
+	circ.setAttribute("cx", x)
+	circ.setAttribute("cy", y)
+	
+}
+
 function comstyle(elemId, property){
 	var elem=document.getElementById(elemId)
 	var style;
@@ -36,33 +84,6 @@ function comstyle(elemId, property){
 	}
 	return style;
 }
-
-
-window.onload=function(){
-
-	 var div = document.getElementById("svg")
-	
-	div.setAttribute("width", "400px")
-	div.setAttribute("height", "200px")
-	
-	 
-	var height = parseInt( comstyle("elem","height"))
-	var width = parseInt(comstyle("elem","width"))
-	
-	var x = width / 2
-	var y = height / 2
-	var circleRedius = Math.min(width, height) / 2
-	var circ = document.getElementById("circ")
-	
-	circ.setAttribute("r", circleRedius)
-	circ.setAttribute("cx", x)
-	circ.setAttribute("cy", y)
-	
-	//setInterval(changeTheMove, 100)
-	//setInterval(changeTheSuperMan, 30);
-	setInterval(move, 30);
-} 
-
 
 //change the circle color
 function changeTheCircleColor(){
@@ -163,7 +184,7 @@ function ImageElement(element , xPos) {
 }
 
 var imageElement = [];
-var maxSize = 50;
+var maxSize = 80;
 var nowSize = 0;
 
 //create x position
@@ -181,6 +202,11 @@ function getYposition() {
 
 //make superman
 function makeSuperman() {
+	
+	
+	if(nowSize >= maxSize){
+		return;
+	}
 	
 	var xPosition = getXposition();
 	var yPosition = getYposition();
@@ -234,8 +260,45 @@ function move(){
 	}
 	
 	
-	
+}
 
+//mouse move
+function showBatman(width, height) {
+	
+	
+	var batman = document.getElementById("mouse")
+	
+	var mouseXpos = window.event.clientX
+	var mouseYpos = window.event.clientY
+	
+	/* console.log("position: " + mouseXpos + " " + mouseYpos) */
+	
+	var xPosition = mouseXpos - width/2
+	var yPosition = mouseYpos - height/2
+	
+	batman.style.position='fixed'
+	batman.style.left = xPosition + "px"
+	batman.style.top = yPosition + "px"
+	
+	batman.setAttribute("src" , "image/batman.png")
+	
+}
+
+//make Batman
+function makeBatman() {
+	
+	var xPosition = 10;
+	var yPosition = 10;
+	
+	var img = document.createElement("img");
+	img.style.position='fixed'
+	img.style.left = xPosition + "px"
+	img.style.top = yPosition + "px"
+
+	img.setAttribute("src", "image/batman.png");
+	img.setAttribute("id", "mouse");
+	
+	document.body.appendChild(img)
 	
 }
 
@@ -257,7 +320,7 @@ function move(){
 	</div>
 	<button onclick="makeSuperman();" value="">btn </button>
 
-
+	
 
 </body>
 
